@@ -22,8 +22,7 @@
 
 html, body {
   height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0 !important; padding: 0 !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 14px !important;
   color: var(--text) !important;
@@ -73,10 +72,13 @@ html, body {
   z-index: 20 !important; pointer-events: none !important; user-select: none !important;
 }
 
+/* ══ GLOBALNY KOLOR TEKSTU (nadpisuje wszystko) ═════ */
+* { color: var(--text) !important; }
+
 /* ════════════════════════════════════════════════════
    LOGIN PAGE
    ════════════════════════════════════════════════════ */
-.login-ui {
+div.login-ui {
   min-height: 100vh !important;
   display: flex !important;
   align-items: center !important;
@@ -85,10 +87,11 @@ html, body {
   position: relative !important;
   z-index: 10 !important;
   padding: 32px !important;
+  color: var(--text) !important;
+  background-color: transparent !important;
 }
 .login-ui .login-dialog {
-  width: 100% !important;
-  max-width: 400px !important;
+  width: 100% !important; max-width: 400px !important;
   background: var(--surface) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   border-radius: 14px !important;
@@ -105,29 +108,21 @@ html, body {
   margin-bottom: 24px !important;
   letter-spacing: 0.05em !important;
 }
-.login-ui .login-dialog .login-fields {
-  display: flex !important;
-  flex-direction: column !important;
-}
-.login-ui .login-dialog .labeled-field {
-  display: flex !important;
-  flex-direction: column !important;
-  margin-bottom: 16px !important;
-}
+.login-ui .login-dialog .login-fields { display: flex !important; flex-direction: column !important; }
+.login-ui .login-dialog .labeled-field { display: flex !important; flex-direction: column !important; margin-bottom: 16px !important; }
 .login-ui .login-dialog .labeled-field label {
-  display: block !important;
   font-size: 11px !important; font-weight: 600 !important;
   letter-spacing: 0.07em !important; text-transform: uppercase !important;
-  color: var(--muted) !important;
-  margin-bottom: 6px !important;
+  color: var(--muted) !important; margin-bottom: 6px !important;
 }
-.login-ui .login-dialog .labeled-field input,
-.login-ui .login-dialog .labeled-field.empty input,
+.login-ui .login-fields .labeled-field input,
+.login-ui .login-fields .labeled-field.empty input,
 .login-ui .login-dialog input[type="text"],
 .login-ui .login-dialog input[type="password"],
 .login-ui .login-dialog input[type="email"] {
   display: block !important; width: 100% !important;
   background: rgba(9,9,11,0.7) !important;
+  background-color: #1a1a1d !important;
   border: 1px solid var(--border) !important;
   border-radius: 8px !important;
   color: var(--text) !important;
@@ -135,24 +130,18 @@ html, body {
   font-size: 14px !important;
   padding: 10px 14px !important;
   outline: none !important;
-  transition: border-color 0.15s, box-shadow 0.15s !important;
   -webkit-text-fill-color: var(--text) !important;
 }
-.login-ui .login-dialog .labeled-field input:focus,
-.login-ui .login-dialog input[type="text"]:focus,
-.login-ui .login-dialog input[type="password"]:focus {
+.login-ui .login-fields .labeled-field input:focus {
+  background-color: #222227 !important;
   border-color: var(--accent) !important;
   box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
-}
-.login-ui .login-dialog input::placeholder {
-  color: var(--placeholder) !important; opacity: 1 !important;
+  color: var(--text) !important;
 }
 .login-ui .login-dialog input:-webkit-autofill,
-.login-ui .login-dialog input:-webkit-autofill:hover,
 .login-ui .login-dialog input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #0d0d10 inset !important;
   -webkit-text-fill-color: var(--text) !important;
-  caret-color: var(--text) !important;
 }
 .login-ui .login-dialog input[type="submit"],
 .login-ui .login-dialog button[type="submit"] {
@@ -160,176 +149,209 @@ html, body {
   background: var(--accent) !important;
   border: none !important; border-radius: 8px !important;
   color: #fff !important;
-  font-family: 'Inter', sans-serif !important;
   font-size: 14px !important; font-weight: 600 !important;
   padding: 11px !important; cursor: pointer !important;
   margin-top: 8px !important;
-  transition: background 0.15s, box-shadow 0.15s, transform 0.1s !important;
 }
-.login-ui .login-dialog input[type="submit"]:hover,
-.login-ui .login-dialog button[type="submit"]:hover {
+.login-ui .login-dialog input[type="submit"]:hover {
   background: var(--accent-hover) !important;
   box-shadow: 0 0 24px rgba(124,58,237,0.4) !important;
-  transform: translateY(-1px) !important;
 }
-.login-ui .login-dialog .error,
-.login-ui .login-dialog [class*="error"] {
-  border-radius: 8px !important; padding: 10px 14px !important;
-  font-size: 13px !important; margin-bottom: 16px !important;
-  background: var(--error-bg) !important;
-  border: 1px solid var(--error-border) !important;
-  color: var(--error-text) !important;
-}
-.login-ui .login-dialog .logo,
-.login-ui .logo { display: none !important; }
-.login-ui a, .login-ui a:visited { color: #a78bfa !important; text-decoration: none !important; }
-.login-ui a:hover { color: #c4b5fd !important; text-decoration: underline !important; }
+.login-ui .login-dialog .logo, .login-ui .logo { display: none !important; }
 
 /* ════════════════════════════════════════════════════
-   HOME PAGE — topbar, menu, sidebar, connections
+   HOME — tła, inputs, textarea
+   ════════════════════════════════════════════════════ */
+div.location,
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password],
+textarea {
+  background-color: #1a1a1d !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+
+/* ════════════════════════════════════════════════════
+   HOME — lista połączeń (PRAWDZIWE selektory Guacamole)
    ════════════════════════════════════════════════════ */
 
-/* Globalny kolor tekstu dla całego UI */
-* { color: var(--text) !important; }
-
-/* Topbar / header */
-.header,
-.menu-header,
-nav,
-[class*="header"],
-[class*="topbar"] {
-  background: var(--surface-2) !important;
-  border-bottom: 1px solid var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* Linki globalne */
-a, a:visited { color: #a78bfa !important; text-decoration: none !important; }
-a:hover      { color: #c4b5fd !important; text-decoration: underline !important; }
-
-/* Nagłówki sekcji (RECENT CONNECTIONS, ALL CONNECTIONS) */
-.section-header,
-.section .header,
-[class*="section"] > .header,
-[class*="section"] > h2,
-[class*="section"] > h3,
-.connection-group-header {
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.18em !important;
-  text-transform: uppercase !important;
-  color: var(--muted) !important;
-  background: transparent !important;
-  border-bottom: 1px solid var(--border) !important;
-  padding: 8px 12px !important;
-}
-
-/* Lista połączeń — wiersze */
-.connection,
-.connection-group,
-[class*="connection-list"] li,
-[class*="connection-list"] .item,
-.recent-connection {
+/* .list-item — każdy wiersz połączenia/użytkownika */
+.list-item {
   background: transparent !important;
   border-bottom: 1px solid rgba(255,255,255,0.04) !important;
   color: var(--text) !important;
-  transition: background 0.12s !important;
 }
-.connection:hover,
-.connection-group:hover,
-[class*="connection-list"] li:hover,
-.recent-connection:hover {
-  background: var(--highlight) !important;
+.list-item .name {
+  color: var(--text) !important;
 }
-
-/* Aktywny/zaznaczony wiersz — zastąp zielone tło */
-.connection.active,
-.connection.selected,
-.connection-group.active,
-.connection-group.selected,
-[class*="active"],
-[class*="selected"] {
+.list-item .caption:hover,
+.list-item:not(.selected) .caption:hover {
+  background-color: var(--highlight) !important;
+}
+.list-item.selected {
   background: var(--highlight) !important;
   border-left: 2px solid var(--accent) !important;
-  color: var(--text) !important;
 }
 
-/* Ikony i etykiety połączeń */
-.connection .name,
-.connection-group .name,
-.caption,
-[class*="connection"] .caption {
-  color: var(--text) !important;
-  font-size: 13px !important;
+/* .recent-connections — sekcja ostatnich połączeń */
+.recent-connections .connection:hover {
+  background-color: var(--highlight) !important;
 }
 
-/* Sidebar / panel boczny */
-.sidebar,
-[class*="sidebar"],
-.panel,
-[class*="panel"] {
-  background: var(--surface-2) !important;
-  border-right: 1px solid var(--border) !important;
+/* użytkownik/group/connection linki */
+.user a, .user-group a,
+.connection a, .connection-group a {
   color: var(--text) !important;
 }
-
-/* Przyciski globalne */
-button,
-input[type="button"],
-.action {
-  background: var(--surface-2) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 6px !important;
-  color: var(--text) !important;
-  font-family: 'Inter', sans-serif !important;
-  padding: 6px 14px !important;
-  cursor: pointer !important;
-  transition: border-color 0.15s, background 0.15s !important;
-}
-button:hover,
-input[type="button"]:hover,
-.action:hover {
-  border-color: var(--accent) !important;
-  background: var(--highlight) !important;
+.user a:hover, .user-group a:hover,
+.connection a:hover, .connection-group a:hover {
+  color: #c4b5fd !important;
 }
 
-/* Dropdown / menu */
-.menu,
-[class*="dropdown"],
-[class*="popup"],
-[class*="context-menu"] {
-  background: #111116 !important;
+/* ════════════════════════════════════════════════════
+   MENU DROPDOWN (prawy górny róg — imię użytkownika)
+   ════════════════════════════════════════════════════ */
+.menu-dropdown .menu-contents {
+  background-color: #111116 !important;
   border: 1px solid var(--border) !important;
   border-radius: 8px !important;
   box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+}
+.menu-dropdown .menu-contents li a {
   color: var(--text) !important;
 }
-.menu li:hover,
-[class*="dropdown"] li:hover {
-  background: var(--highlight) !important;
+.menu-dropdown .menu-contents li a:hover {
+  background-color: var(--highlight) !important;
+  color: #c4b5fd !important;
 }
 
-/* Notification / toast */
-[class*="notification"],
-[class*="toast"] {
-  background: var(--surface-2) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
+/* ════════════════════════════════════════════════════
+   MENU (session toolbar podczas połączenia)
+   ════════════════════════════════════════════════════ */
+.menu {
+  color: var(--text) !important;
+  background-color: #111116 !important;
+  border-right: 1px solid var(--border) !important;
+}
+.clipboard,
+.clipboard-service-target {
+  background-color: #1a1a1d !important;
   color: var(--text) !important;
 }
+#connection-warning {
+  background-color: rgba(168,168,0,0.15) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(168,168,0,0.3) !important;
+}
+.transfer-manager {
+  background-color: #1a1a1d !important;
+  color: var(--text) !important;
+}
+.transfer.error {
+  background-color: var(--error-bg) !important;
+  border: 1px solid var(--error-border) !important;
+  color: var(--error-text) !important;
+}
+#guac-menu #zoom-out:hover,
+#guac-menu #zoom-in:hover {
+  background-color: var(--highlight) !important;
+}
 
-/* Toolbar / action bar */
-.toolbar,
-[class*="toolbar"] {
+/* ════════════════════════════════════════════════════
+   SETTINGS — zakładki, tabele, formularze
+   ════════════════════════════════════════════════════ */
+.page-tabs .page-list li a[href],
+.section-tabs li a {
+  color: var(--muted) !important;
+  background: transparent !important;
+}
+.page-tabs .page-list li a[href]:hover,
+.section-tabs li a:hover {
+  background-color: var(--highlight) !important;
+  color: var(--text) !important;
+}
+.page-tabs .page-list li a[href]:visited {
+  color: var(--text) !important;
+}
+.page-tabs .page-list,
+.section-tabs {
   background: var(--surface-2) !important;
   border-bottom: 1px solid var(--border) !important;
 }
 
-/* ── Checkbox ──────────────────────────────────────── */
-input[type="checkbox"] { accent-color: var(--accent) !important; }
+/* Tabela sesji */
+.settings table.session-list tr.session:hover {
+  background-color: var(--highlight) !important;
+}
+.settings table,
+table {
+  color: var(--text) !important;
+  background: transparent !important;
+}
+table th {
+  background: var(--surface-2) !important;
+  color: var(--muted) !important;
+  border-bottom: 1px solid var(--border) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+table td {
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  color: var(--text) !important;
+}
 
-/* ── Scrollbar ──────────────────────────────────────── */
+/* Location chooser (dropdown wyboru grupy) */
+.location-chooser .dropdown {
+  background-color: #111116 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  color: var(--text) !important;
+}
+
+/* Filesystem (file browser podczas sesji) */
+#filesystem-menu .header.breadcrumbs .breadcrumb:hover {
+  background-color: var(--highlight) !important;
+}
+#filesystem-menu {
+  background: #111116 !important;
+  color: var(--text) !important;
+  border-left: 1px solid var(--border) !important;
+}
+
+/* Notice / read-only alert */
+.manage-user .notice.read-only {
+  background-color: rgba(120,60,0,0.2) !important;
+  color: var(--muted) !important;
+  border: 1px solid rgba(120,60,0,0.3) !important;
+  border-radius: 6px !important;
+}
+
+/* Error message */
+.error, [class*="error"] {
+  color: var(--error-text) !important;
+}
+
+/* ════════════════════════════════════════════════════
+   LINKI GLOBALNE
+   ════════════════════════════════════════════════════ */
+a[href], a[href]:visited { color: #a78bfa !important; }
+a[href]:hover { color: #c4b5fd !important; }
+
+/* ════════════════════════════════════════════════════
+   MISC
+   ════════════════════════════════════════════════════ */
+input[type="checkbox"] { accent-color: var(--accent) !important; }
+pre {
+  background-color: #1a1a1d !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 6px !important;
+}
+
 ::-webkit-scrollbar { width: 6px !important; }
 ::-webkit-scrollbar-track { background: var(--bg) !important; }
 ::-webkit-scrollbar-thumb { background: #3f3f46 !important; border-radius: 3px !important; }
