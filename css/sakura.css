@@ -5,13 +5,20 @@
   --accent:       #7c3aed;
   --accent-hover: #6d28d9;
   --bg:           #09090b;
-  --surface:      rgba(15,15,18,0.85);
-  --surface-2:    #111113;
-  --border:       #27272a;
+
+  /* półprzezroczyste powierzchnie — efekt depth */
+  --surface:      rgba(22,22,28,0.92);
+  --surface-2:    rgba(18,18,23,0.88);
+  --surface-3:    rgba(28,28,36,0.80);   /* jaśniejsza warstwa — karty, wiersze */
+  --surface-hover:rgba(38,38,50,0.90);   /* hover — wyraźniej widoczny */
+
+  --border:       rgba(255,255,255,0.08);
+  --border-bright:rgba(255,255,255,0.13);
   --text:         #f4f4f5;
   --muted:        #a1a1aa;
   --placeholder:  #52525b;
-  --highlight:    rgba(124,58,237,0.12);
+  --highlight:    rgba(124,58,237,0.15);
+  --highlight-border: rgba(124,58,237,0.35);
   --error-bg:     rgba(239,68,68,0.08);
   --error-border: rgba(239,68,68,0.25);
   --error-text:   #fca5a5;
@@ -28,8 +35,8 @@ html, body {
   color: var(--text) !important;
   background-color: var(--bg) !important;
   background-image:
-    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px) !important;
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) !important;
   background-size: 80px 80px !important;
   background-attachment: fixed !important;
   -webkit-font-smoothing: antialiased !important;
@@ -45,7 +52,7 @@ html, body {
   transform: translateX(-50%) !important;
   width: 100vw !important; max-width: 1000px !important;
   pointer-events: none !important; z-index: 1 !important;
-  opacity: 0.08 !important;
+  opacity: 0.07 !important;
 }
 #sakura-branding {
   position: fixed !important; top: 20px !important; left: 24px !important;
@@ -72,7 +79,7 @@ html, body {
   z-index: 20 !important; pointer-events: none !important; user-select: none !important;
 }
 
-/* ══ GLOBALNY KOLOR TEKSTU (nadpisuje wszystko) ═════ */
+/* ══ GLOBALNY KOLOR TEKSTU ════════════════════════ */
 * { color: var(--text) !important; }
 
 /* ════════════════════════════════════════════════════
@@ -80,33 +87,29 @@ html, body {
    ════════════════════════════════════════════════════ */
 div.login-ui {
   min-height: 100vh !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
   background: transparent !important;
-  position: relative !important;
-  z-index: 10 !important;
+  position: relative !important; z-index: 10 !important;
   padding: 32px !important;
-  color: var(--text) !important;
-  background-color: transparent !important;
 }
 .login-ui .login-dialog {
   width: 100% !important; max-width: 400px !important;
   background: var(--surface) !important;
-  border: 1px solid rgba(255,255,255,0.06) !important;
-  border-radius: 14px !important;
+  border: 1px solid var(--border-bright) !important;
+  border-radius: 16px !important;
   padding: 36px 32px !important;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;
-  backdrop-filter: blur(12px) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 25px 60px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(20px) !important;
 }
 .login-ui .login-dialog .title,
-.login-ui .login-dialog h1,
-.login-ui .login-dialog h2 {
+.login-ui .login-dialog h1, .login-ui .login-dialog h2 {
   font-family: 'JetBrains Mono', monospace !important;
   font-size: 18px !important; font-weight: 700 !important;
   color: var(--text) !important;
-  margin-bottom: 24px !important;
-  letter-spacing: 0.05em !important;
+  margin-bottom: 24px !important; letter-spacing: 0.05em !important;
 }
 .login-ui .login-dialog .login-fields { display: flex !important; flex-direction: column !important; }
 .login-ui .login-dialog .labeled-field { display: flex !important; flex-direction: column !important; margin-bottom: 16px !important; }
@@ -121,9 +124,8 @@ div.login-ui {
 .login-ui .login-dialog input[type="password"],
 .login-ui .login-dialog input[type="email"] {
   display: block !important; width: 100% !important;
-  background: rgba(9,9,11,0.7) !important;
-  background-color: #1a1a1d !important;
-  border: 1px solid var(--border) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--border-bright) !important;
   border-radius: 8px !important;
   color: var(--text) !important;
   font-family: 'Inter', sans-serif !important;
@@ -131,16 +133,16 @@ div.login-ui {
   padding: 10px 14px !important;
   outline: none !important;
   -webkit-text-fill-color: var(--text) !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
 }
 .login-ui .login-fields .labeled-field input:focus {
-  background-color: #222227 !important;
+  background: rgba(255,255,255,0.07) !important;
   border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
-  color: var(--text) !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.2) !important;
 }
 .login-ui .login-dialog input:-webkit-autofill,
 .login-ui .login-dialog input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #0d0d10 inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px #141418 inset !important;
   -webkit-text-fill-color: var(--text) !important;
 }
 .login-ui .login-dialog input[type="submit"],
@@ -152,207 +154,191 @@ div.login-ui {
   font-size: 14px !important; font-weight: 600 !important;
   padding: 11px !important; cursor: pointer !important;
   margin-top: 8px !important;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.3) !important;
+  transition: background 0.15s, box-shadow 0.15s !important;
 }
 .login-ui .login-dialog input[type="submit"]:hover {
   background: var(--accent-hover) !important;
-  box-shadow: 0 0 24px rgba(124,58,237,0.4) !important;
+  box-shadow: 0 4px 28px rgba(124,58,237,0.55) !important;
 }
 .login-ui .login-dialog .logo, .login-ui .logo { display: none !important; }
 
 /* ════════════════════════════════════════════════════
-   HOME — tła, inputs, textarea
+   HOME — inputs, textarea
    ════════════════════════════════════════════════════ */
 div.location,
-input[type=text],
-input[type=email],
-input[type=number],
-input[type=password],
+input[type=text], input[type=email],
+input[type=number], input[type=password],
 textarea {
-  background-color: #1a1a1d !important;
+  background: rgba(255,255,255,0.04) !important;
   color: var(--text) !important;
-  border: 1px solid var(--border) !important;
+  border: 1px solid var(--border-bright) !important;
   border-radius: 6px !important;
 }
 
 /* ════════════════════════════════════════════════════
-   HOME — lista połączeń (PRAWDZIWE selektory Guacamole)
+   HOME — lista połączeń
    ════════════════════════════════════════════════════ */
-
-/* .list-item — każdy wiersz połączenia/użytkownika */
 .list-item {
-  background: transparent !important;
-  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
-  color: var(--text) !important;
+  background: var(--surface-3) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  margin: 3px 6px !important;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s !important;
 }
-.list-item .name {
-  color: var(--text) !important;
-}
+.list-item .name { color: var(--text) !important; }
+
 .list-item .caption:hover,
 .list-item:not(.selected) .caption:hover {
-  background-color: var(--highlight) !important;
+  background: var(--surface-hover) !important;
+  border-radius: 7px !important;
 }
 .list-item.selected {
   background: var(--highlight) !important;
-  border-left: 2px solid var(--accent) !important;
+  border-color: var(--highlight-border) !important;
+  box-shadow: 0 0 12px rgba(124,58,237,0.15), inset 0 0 0 1px rgba(124,58,237,0.2) !important;
 }
 
-/* .recent-connections — sekcja ostatnich połączeń */
 .recent-connections .connection:hover {
-  background-color: var(--highlight) !important;
+  background: var(--surface-hover) !important;
+  border-radius: 8px !important;
 }
 
-/* użytkownik/group/connection linki */
 .user a, .user-group a,
-.connection a, .connection-group a {
-  color: var(--text) !important;
-}
-.user a:hover, .user-group a:hover,
-.connection a:hover, .connection-group a:hover {
-  color: #c4b5fd !important;
-}
+.connection a, .connection-group a { color: var(--text) !important; }
+.user a:hover, .connection a:hover { color: #c4b5fd !important; }
 
 /* ════════════════════════════════════════════════════
-   MENU DROPDOWN (prawy górny róg — imię użytkownika)
+   MENU DROPDOWN (prawy górny róg)
    ════════════════════════════════════════════════════ */
 .menu-dropdown .menu-contents {
-  background-color: #111116 !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-bright) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(16px) !important;
 }
-.menu-dropdown .menu-contents li a {
-  color: var(--text) !important;
-}
+.menu-dropdown .menu-contents li a { color: var(--text) !important; }
 .menu-dropdown .menu-contents li a:hover {
-  background-color: var(--highlight) !important;
+  background: var(--surface-hover) !important;
   color: #c4b5fd !important;
 }
 
 /* ════════════════════════════════════════════════════
-   MENU (session toolbar podczas połączenia)
+   MENU SESSION TOOLBAR
    ════════════════════════════════════════════════════ */
 .menu {
-  color: var(--text) !important;
-  background-color: #111116 !important;
-  border-right: 1px solid var(--border) !important;
+  background: var(--surface-2) !important;
+  border-right: 1px solid var(--border-bright) !important;
+  backdrop-filter: blur(12px) !important;
 }
-.clipboard,
-.clipboard-service-target {
-  background-color: #1a1a1d !important;
+.clipboard, .clipboard-service-target {
+  background: rgba(255,255,255,0.04) !important;
   color: var(--text) !important;
+  border: 1px solid var(--border) !important;
 }
 #connection-warning {
-  background-color: rgba(168,168,0,0.15) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(168,168,0,0.3) !important;
+  background: rgba(168,168,0,0.12) !important;
+  border: 1px solid rgba(168,168,0,0.25) !important;
+  border-radius: 6px !important;
 }
 .transfer-manager {
-  background-color: #1a1a1d !important;
-  color: var(--text) !important;
+  background: var(--surface-3) !important;
+  border: 1px solid var(--border) !important;
 }
 .transfer.error {
-  background-color: var(--error-bg) !important;
+  background: var(--error-bg) !important;
   border: 1px solid var(--error-border) !important;
   color: var(--error-text) !important;
 }
-#guac-menu #zoom-out:hover,
-#guac-menu #zoom-in:hover {
-  background-color: var(--highlight) !important;
+#guac-menu #zoom-out:hover, #guac-menu #zoom-in:hover {
+  background: var(--surface-hover) !important;
+  border-radius: 4px !important;
 }
 
 /* ════════════════════════════════════════════════════
-   SETTINGS — zakładki, tabele, formularze
+   SETTINGS
    ════════════════════════════════════════════════════ */
-.page-tabs .page-list li a[href],
-.section-tabs li a {
-  color: var(--muted) !important;
-  background: transparent !important;
-}
-.page-tabs .page-list li a[href]:hover,
-.section-tabs li a:hover {
-  background-color: var(--highlight) !important;
-  color: var(--text) !important;
-}
-.page-tabs .page-list li a[href]:visited {
-  color: var(--text) !important;
-}
 .page-tabs .page-list,
 .section-tabs {
   background: var(--surface-2) !important;
-  border-bottom: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border-bright) !important;
+  backdrop-filter: blur(8px) !important;
 }
-
-/* Tabela sesji */
-.settings table.session-list tr.session:hover {
-  background-color: var(--highlight) !important;
-}
-.settings table,
-table {
+.page-tabs .page-list li a[href],
+.section-tabs li a { color: var(--muted) !important; background: transparent !important; }
+.page-tabs .page-list li a[href]:hover,
+.section-tabs li a:hover {
+  background: var(--surface-hover) !important;
   color: var(--text) !important;
+  border-radius: 6px !important;
+}
+.page-tabs .page-list li a[href]:visited { color: var(--text) !important; }
+
+.settings table.session-list tr.session:hover {
+  background: var(--surface-hover) !important;
+}
+table {
   background: transparent !important;
+  border-collapse: separate !important;
+  border-spacing: 0 3px !important;
 }
 table th {
   background: var(--surface-2) !important;
   color: var(--muted) !important;
-  border-bottom: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border-bright) !important;
   font-size: 11px !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important; text-transform: uppercase !important;
+  padding: 8px 12px !important;
 }
 table td {
-  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
-  color: var(--text) !important;
+  background: var(--surface-3) !important;
+  border-bottom: 1px solid transparent !important;
+  padding: 8px 12px !important;
+}
+table tr:hover td {
+  background: var(--surface-hover) !important;
 }
 
-/* Location chooser (dropdown wyboru grupy) */
 .location-chooser .dropdown {
-  background-color: #111116 !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 6px !important;
-  color: var(--text) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-bright) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
 }
 
-/* Filesystem (file browser podczas sesji) */
-#filesystem-menu .header.breadcrumbs .breadcrumb:hover {
-  background-color: var(--highlight) !important;
-}
 #filesystem-menu {
-  background: #111116 !important;
-  color: var(--text) !important;
-  border-left: 1px solid var(--border) !important;
+  background: var(--surface-2) !important;
+  border-left: 1px solid var(--border-bright) !important;
+  backdrop-filter: blur(12px) !important;
+}
+#filesystem-menu .header.breadcrumbs .breadcrumb:hover {
+  background: var(--surface-hover) !important;
+  border-radius: 4px !important;
 }
 
-/* Notice / read-only alert */
 .manage-user .notice.read-only {
-  background-color: rgba(120,60,0,0.2) !important;
-  color: var(--muted) !important;
-  border: 1px solid rgba(120,60,0,0.3) !important;
+  background: rgba(120,60,0,0.15) !important;
+  border: 1px solid rgba(120,60,0,0.25) !important;
   border-radius: 6px !important;
+  color: var(--muted) !important;
 }
 
-/* Error message */
-.error, [class*="error"] {
-  color: var(--error-text) !important;
-}
+.error, [class*="error"] { color: var(--error-text) !important; }
 
-/* ════════════════════════════════════════════════════
-   LINKI GLOBALNE
-   ════════════════════════════════════════════════════ */
 a[href], a[href]:visited { color: #a78bfa !important; }
 a[href]:hover { color: #c4b5fd !important; }
 
-/* ════════════════════════════════════════════════════
-   MISC
-   ════════════════════════════════════════════════════ */
 input[type="checkbox"] { accent-color: var(--accent) !important; }
 pre {
-  background-color: #1a1a1d !important;
-  border: 1px solid var(--border) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--border-bright) !important;
   color: var(--text) !important;
   border-radius: 6px !important;
 }
 
 ::-webkit-scrollbar { width: 6px !important; }
-::-webkit-scrollbar-track { background: var(--bg) !important; }
-::-webkit-scrollbar-thumb { background: #3f3f46 !important; border-radius: 3px !important; }
-::-webkit-scrollbar-thumb:hover { background: #52525b !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1) !important; border-radius: 3px !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18) !important; }
