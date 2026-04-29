@@ -16,20 +16,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Build JAR
+      - name: Build JAR (via zip)
         run: |
-          jar cvf sakura-guacamole-${{ github.event.inputs.version }}.jar \
+          cd ${{ github.workspace }}
+          zip -r sakura-guacamole-${{ github.event.inputs.version }}.jar \
             guac-manifest.json \
             css \
             js \
             html \
             img
+
+      - name: Verify manifest is at root of JAR
+        run: unzip -l sakura-guacamole-${{ github.event.inputs.version }}.jar | grep guac-manifest.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -47,8 +45,8 @@ jobs:
           files: sakura-guacamole-${{ github.event.inputs.version }}.jar
           body: |
             Guacamole branding extension — sakura theme
-            
+
             ## Installation
-            Drop `sakura-guacamole-${{ github.event.inputs.version }}.jar` into your `extensions/` folder and restart Guacamole.
+            Drop `sakura-guacamole-${{ github.event.inputs.version }}.jar` into `/etc/guacamole/extensions/` and restart Guacamole.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
