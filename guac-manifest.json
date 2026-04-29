@@ -1,17 +1,19 @@
 {
-    "guacamoleVersion": "1.5.5",
+    "guacamoleVersion": "1.6.0",
     "name": "Sakura Theme",
     "namespace": "sakura",
 
-    "html": [
-        { "type": "body", "source": "html/body.html" }
-    ],
+    "css": [ "css/sakura.css" ],
 
-    "js": [
-        { "source": "js/sakura.js" }
-    ],
+    "js": [ "js/sakura.js" ],
 
-    "css": [
-        { "source": "css/sakura.css" }
-    ]
+    "html": [ "html/body.html" ],
+
+    "resources": {
+        "img/fuji.svg":           "image/svg+xml",
+        "img/sakura/sakura1.png": "image/png",
+        "img/sakura/sakura2.png": "image/png",
+        "img/sakura/sakura3.png": "image/png",
+        "img/sakura/sakura4.png": "image/png"
+    }
 }
