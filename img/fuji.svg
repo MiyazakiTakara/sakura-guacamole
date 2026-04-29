@@ -1,0 +1,15 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- czerwone słońce -->
+  <circle cx="400" cy="150" r="90" fill="#e11d2f" />
+
+  <!-- góra Fuji – biały line-art -->
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M190 320 L400 120 L610 320" />
+    <path d="M340 190 L400 150 L460 195 L445 205 L420 195 L395 210 L375 200 L355 210 Z" />
+    <path d="M260 290 Q310 260 340 245 Q355 235 360 220" />
+    <path d="M440 225 Q455 235 475 250 Q505 270 545 285" />
+    <path d="M300 310 Q350 285 380 280 Q405 275 430 280 Q470 288 515 305" />
+    <path d="M80 330 Q220 340 320 338 Q430 335 530 340 Q650 345 720 338" />
+    <path d="M260 360 Q330 365 380 370 Q420 375 445 385 Q420 395 390 400 Q360 405 335 412" />
+  </g>
+</svg>

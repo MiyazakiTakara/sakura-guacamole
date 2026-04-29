@@ -1,0 +1,17 @@
+{
+    "guacamoleVersion": "1.5.5",
+    "name": "Sakura Theme",
+    "namespace": "sakura",
+
+    "html": [
+        { "type": "body", "source": "html/body.html" }
+    ],
+
+    "js": [
+        { "source": "js/sakura.js" }
+    ],
+
+    "css": [
+        { "source": "css/sakura.css" }
+    ]
+}
