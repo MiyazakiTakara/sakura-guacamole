@@ -2,17 +2,19 @@
 
 /* ── Zmienne ───────────────────────────────────────── */
 :root {
-  --accent:  #7c3aed;
+  --accent:       #7c3aed;
   --accent-hover: #6d28d9;
-  --bg:      #09090b;
-  --surface: rgba(15,15,18,0.85);
-  --border:  #27272a;
-  --text:    #f4f4f5;
-  --muted:   #a1a1aa;
-  --placeholder: #52525b;
-  --error-bg:    rgba(239,68,68,0.08);
+  --bg:           #09090b;
+  --surface:      rgba(15,15,18,0.85);
+  --surface-2:    #111113;
+  --border:       #27272a;
+  --text:         #f4f4f5;
+  --muted:        #a1a1aa;
+  --placeholder:  #52525b;
+  --highlight:    rgba(124,58,237,0.12);
+  --error-bg:     rgba(239,68,68,0.08);
   --error-border: rgba(239,68,68,0.25);
-  --error-text:  #fca5a5;
+  --error-text:   #fca5a5;
 }
 
 /* ── Reset & tło ───────────────────────────────────── */
@@ -34,7 +36,7 @@ html, body {
   -webkit-font-smoothing: antialiased !important;
 }
 
-/* ── Dekoracje (canvas + fuji) ─────────────────────── */
+/* ── Dekoracje ─────────────────────────────────────── */
 #sakura-canvas {
   position: fixed !important; inset: 0 !important;
   pointer-events: none !important; z-index: 2 !important;
@@ -46,8 +48,6 @@ html, body {
   pointer-events: none !important; z-index: 1 !important;
   opacity: 0.08 !important;
 }
-
-/* ── Branding overlay ──────────────────────────────── */
 #sakura-branding {
   position: fixed !important; top: 20px !important; left: 24px !important;
   z-index: 50 !important; pointer-events: none !important;
@@ -73,7 +73,9 @@ html, body {
   z-index: 20 !important; pointer-events: none !important; user-select: none !important;
 }
 
-/* ── Główny wrapper ────────────────────────────────── */
+/* ════════════════════════════════════════════════════
+   LOGIN PAGE
+   ════════════════════════════════════════════════════ */
 .login-ui {
   min-height: 100vh !important;
   display: flex !important;
@@ -84,8 +86,6 @@ html, body {
   z-index: 10 !important;
   padding: 32px !important;
 }
-
-/* ── Karta logowania ───────────────────────────────── */
 .login-ui .login-dialog {
   width: 100% !important;
   max-width: 400px !important;
@@ -96,8 +96,6 @@ html, body {
   box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;
   backdrop-filter: blur(12px) !important;
 }
-
-/* ── Tytuł ─────────────────────────────────────────── */
 .login-ui .login-dialog .title,
 .login-ui .login-dialog h1,
 .login-ui .login-dialog h2 {
@@ -107,22 +105,15 @@ html, body {
   margin-bottom: 24px !important;
   letter-spacing: 0.05em !important;
 }
-
-/* ── Pola (labeled-field) ──────────────────────────── */
 .login-ui .login-dialog .login-fields {
   display: flex !important;
   flex-direction: column !important;
-  gap: 0 !important;
 }
-
 .login-ui .login-dialog .labeled-field {
   display: flex !important;
   flex-direction: column !important;
   margin-bottom: 16px !important;
-  position: relative !important;
 }
-
-/* Labele — ukryte ale zachowane dla a11y */
 .login-ui .login-dialog .labeled-field label {
   display: block !important;
   font-size: 11px !important; font-weight: 600 !important;
@@ -130,15 +121,12 @@ html, body {
   color: var(--muted) !important;
   margin-bottom: 6px !important;
 }
-
-/* ── Inputy ────────────────────────────────────────── */
 .login-ui .login-dialog .labeled-field input,
 .login-ui .login-dialog .labeled-field.empty input,
 .login-ui .login-dialog input[type="text"],
 .login-ui .login-dialog input[type="password"],
 .login-ui .login-dialog input[type="email"] {
-  display: block !important;
-  width: 100% !important;
+  display: block !important; width: 100% !important;
   background: rgba(9,9,11,0.7) !important;
   border: 1px solid var(--border) !important;
   border-radius: 8px !important;
@@ -150,21 +138,15 @@ html, body {
   transition: border-color 0.15s, box-shadow 0.15s !important;
   -webkit-text-fill-color: var(--text) !important;
 }
-
 .login-ui .login-dialog .labeled-field input:focus,
-.login-ui .login-dialog .labeled-field.empty input:focus,
 .login-ui .login-dialog input[type="text"]:focus,
 .login-ui .login-dialog input[type="password"]:focus {
   border-color: var(--accent) !important;
   box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
 }
-
 .login-ui .login-dialog input::placeholder {
-  color: var(--placeholder) !important;
-  opacity: 1 !important;
+  color: var(--placeholder) !important; opacity: 1 !important;
 }
-
-/* Autofill — wymuś ciemne tło */
 .login-ui .login-dialog input:-webkit-autofill,
 .login-ui .login-dialog input:-webkit-autofill:hover,
 .login-ui .login-dialog input:-webkit-autofill:focus {
@@ -172,22 +154,15 @@ html, body {
   -webkit-text-fill-color: var(--text) !important;
   caret-color: var(--text) !important;
 }
-
-/* ── Przycisk submit ───────────────────────────────── */
 .login-ui .login-dialog input[type="submit"],
-.login-ui .login-dialog button[type="submit"],
-.login-ui .login-dialog .login-fields input[type="submit"] {
-  display: block !important;
-  width: 100% !important;
+.login-ui .login-dialog button[type="submit"] {
+  display: block !important; width: 100% !important;
   background: var(--accent) !important;
-  border: none !important;
-  border-radius: 8px !important;
+  border: none !important; border-radius: 8px !important;
   color: #fff !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 14px !important; font-weight: 600 !important;
-  padding: 11px !important;
-  cursor: pointer !important;
-  letter-spacing: 0.03em !important;
+  padding: 11px !important; cursor: pointer !important;
   margin-top: 8px !important;
   transition: background 0.15s, box-shadow 0.15s, transform 0.1s !important;
 }
@@ -197,37 +172,158 @@ html, body {
   box-shadow: 0 0 24px rgba(124,58,237,0.4) !important;
   transform: translateY(-1px) !important;
 }
-
-/* ── Linki ─────────────────────────────────────────── */
-.login-ui a,
-.login-ui a:visited {
-  color: #a78bfa !important;
-  text-decoration: none !important;
-}
-.login-ui a:hover {
-  color: #c4b5fd !important;
-  text-decoration: underline !important;
-}
-
-/* ── Błędy / komunikaty ────────────────────────────── */
 .login-ui .login-dialog .error,
-.login-ui .login-dialog .login-error,
-.login-ui .login-dialog .error-message,
 .login-ui .login-dialog [class*="error"] {
-  border-radius: 8px !important;
-  padding: 10px 14px !important;
-  font-size: 13px !important;
-  margin-bottom: 16px !important;
+  border-radius: 8px !important; padding: 10px 14px !important;
+  font-size: 13px !important; margin-bottom: 16px !important;
   background: var(--error-bg) !important;
   border: 1px solid var(--error-border) !important;
   color: var(--error-text) !important;
 }
-
-/* ── Domyślne logo Guacamole — ukryj ───────────────── */
 .login-ui .login-dialog .logo,
-.login-ui .login-dialog img.logo,
-.login-ui .logo {
-  display: none !important;
+.login-ui .logo { display: none !important; }
+.login-ui a, .login-ui a:visited { color: #a78bfa !important; text-decoration: none !important; }
+.login-ui a:hover { color: #c4b5fd !important; text-decoration: underline !important; }
+
+/* ════════════════════════════════════════════════════
+   HOME PAGE — topbar, menu, sidebar, connections
+   ════════════════════════════════════════════════════ */
+
+/* Globalny kolor tekstu dla całego UI */
+* { color: var(--text) !important; }
+
+/* Topbar / header */
+.header,
+.menu-header,
+nav,
+[class*="header"],
+[class*="topbar"] {
+  background: var(--surface-2) !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Linki globalne */
+a, a:visited { color: #a78bfa !important; text-decoration: none !important; }
+a:hover      { color: #c4b5fd !important; text-decoration: underline !important; }
+
+/* Nagłówki sekcji (RECENT CONNECTIONS, ALL CONNECTIONS) */
+.section-header,
+.section .header,
+[class*="section"] > .header,
+[class*="section"] > h2,
+[class*="section"] > h3,
+.connection-group-header {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 8px 12px !important;
+}
+
+/* Lista połączeń — wiersze */
+.connection,
+.connection-group,
+[class*="connection-list"] li,
+[class*="connection-list"] .item,
+.recent-connection {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  color: var(--text) !important;
+  transition: background 0.12s !important;
+}
+.connection:hover,
+.connection-group:hover,
+[class*="connection-list"] li:hover,
+.recent-connection:hover {
+  background: var(--highlight) !important;
+}
+
+/* Aktywny/zaznaczony wiersz — zastąp zielone tło */
+.connection.active,
+.connection.selected,
+.connection-group.active,
+.connection-group.selected,
+[class*="active"],
+[class*="selected"] {
+  background: var(--highlight) !important;
+  border-left: 2px solid var(--accent) !important;
+  color: var(--text) !important;
+}
+
+/* Ikony i etykiety połączeń */
+.connection .name,
+.connection-group .name,
+.caption,
+[class*="connection"] .caption {
+  color: var(--text) !important;
+  font-size: 13px !important;
+}
+
+/* Sidebar / panel boczny */
+.sidebar,
+[class*="sidebar"],
+.panel,
+[class*="panel"] {
+  background: var(--surface-2) !important;
+  border-right: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Przyciski globalne */
+button,
+input[type="button"],
+.action {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  color: var(--text) !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 6px 14px !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s, background 0.15s !important;
+}
+button:hover,
+input[type="button"]:hover,
+.action:hover {
+  border-color: var(--accent) !important;
+  background: var(--highlight) !important;
+}
+
+/* Dropdown / menu */
+.menu,
+[class*="dropdown"],
+[class*="popup"],
+[class*="context-menu"] {
+  background: #111116 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+  color: var(--text) !important;
+}
+.menu li:hover,
+[class*="dropdown"] li:hover {
+  background: var(--highlight) !important;
+}
+
+/* Notification / toast */
+[class*="notification"],
+[class*="toast"] {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+}
+
+/* Toolbar / action bar */
+.toolbar,
+[class*="toolbar"] {
+  background: var(--surface-2) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
 /* ── Checkbox ──────────────────────────────────────── */
