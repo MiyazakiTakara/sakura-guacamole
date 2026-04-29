@@ -1,180 +1,240 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ── Zmienne ───────────────────────────────────────── */
 :root {
   --accent:  #7c3aed;
+  --accent-hover: #6d28d9;
   --bg:      #09090b;
+  --surface: rgba(15,15,18,0.85);
   --border:  #27272a;
   --text:    #f4f4f5;
   --muted:   #a1a1aa;
+  --placeholder: #52525b;
+  --error-bg:    rgba(239,68,68,0.08);
+  --error-border: rgba(239,68,68,0.25);
+  --error-text:  #fca5a5;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+/* ── Reset & tło ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box !important; }
 
-html {
-  height: 100%;
-  background: var(--bg);
+html, body {
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  color: var(--text) !important;
+  background-color: var(--bg) !important;
   background-image:
     linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
-  background-size: 80px 80px;
-  background-attachment: fixed;
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px) !important;
+  background-size: 80px 80px !important;
+  background-attachment: fixed !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
-body {
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: var(--text);
-  background: transparent;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ── Dekoracje ──────────────────────────────────────── */
+/* ── Dekoracje (canvas + fuji) ─────────────────────── */
 #sakura-canvas {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 2;
+  position: fixed !important; inset: 0 !important;
+  pointer-events: none !important; z-index: 2 !important;
 }
-
 #fuji-bg {
-  position: fixed; bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100vw; max-width: 1000px;
-  pointer-events: none; z-index: 1;
-  opacity: 0.08;
+  position: fixed !important; bottom: 0 !important; left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100vw !important; max-width: 1000px !important;
+  pointer-events: none !important; z-index: 1 !important;
+  opacity: 0.08 !important;
 }
 
-/* ── Branding ──────────────────────────────────────── */
+/* ── Branding overlay ──────────────────────────────── */
 #sakura-branding {
-  position: fixed; top: 20px; left: 24px;
-  z-index: 50; pointer-events: none;
-  display: flex; flex-direction: column; gap: 3px;
+  position: fixed !important; top: 20px !important; left: 24px !important;
+  z-index: 50 !important; pointer-events: none !important;
+  display: flex !important; flex-direction: column !important; gap: 3px !important;
 }
 .brand-main {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: #52525b;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 0.2em !important; text-transform: uppercase !important;
+  color: #52525b !important;
 }
 .brand-sub {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 0.18em;
-  color: #3f3f46;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important; letter-spacing: 0.18em !important;
+  color: #3f3f46 !important;
 }
-
 #side-label {
-  position: fixed; left: 14px; top: 50%;
-  transform: translateY(-50%);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 0.3em;
-  color: #2d2d30; writing-mode: vertical-rl;
-  z-index: 20; pointer-events: none; user-select: none;
+  position: fixed !important; left: 14px !important; top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important; letter-spacing: 0.3em !important;
+  color: #2d2d30 !important; writing-mode: vertical-rl !important;
+  z-index: 20 !important; pointer-events: none !important; user-select: none !important;
 }
 
-/* ── Login UI layout ──────────────────────────────── */
+/* ── Główny wrapper ────────────────────────────────── */
 .login-ui {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
-  padding: 32px;
-  background: transparent;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
+  padding: 32px !important;
 }
 
-.login-dialog {
-  width: 100%;
-  max-width: 400px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 36px 32px;
+/* ── Karta logowania ───────────────────────────────── */
+.login-ui .login-dialog {
+  width: 100% !important;
+  max-width: 400px !important;
+  background: var(--surface) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 14px !important;
+  padding: 36px 32px !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6) !important;
+  backdrop-filter: blur(12px) !important;
 }
 
-.login-dialog .title {
-  font-size: 18px; font-weight: 700;
-  color: var(--text);
-  margin-bottom: 24px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.05em;
+/* ── Tytuł ─────────────────────────────────────────── */
+.login-ui .login-dialog .title,
+.login-ui .login-dialog h1,
+.login-ui .login-dialog h2 {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 18px !important; font-weight: 700 !important;
+  color: var(--text) !important;
+  margin-bottom: 24px !important;
+  letter-spacing: 0.05em !important;
 }
 
-/* ── Pola ──────────────────────────────────────────── */
-.login-dialog input[type="text"],
-.login-dialog input[type="password"],
-.login-dialog input[type="email"] {
-  display: block; width: 100%;
-  background: rgba(9,9,11,0.6);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 10px 14px;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  margin-bottom: 16px;
+/* ── Pola (labeled-field) ──────────────────────────── */
+.login-ui .login-dialog .login-fields {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
 }
 
-.login-dialog input[type="text"]:focus,
-.login-dialog input[type="password"]:focus,
-.login-dialog input[type="email"]:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+.login-ui .login-dialog .labeled-field {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 16px !important;
+  position: relative !important;
 }
 
-.login-dialog input::placeholder { color: #52525b; }
-
-/* ── Przycisk ───────────────────────────────────────── */
-.login-dialog input[type="submit"],
-.login-dialog button[type="submit"] {
-  display: block; width: 100%;
-  background: var(--accent);
-  border: none; border-radius: 8px;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px; font-weight: 600;
-  padding: 11px; cursor: pointer;
-  letter-spacing: 0.03em;
-  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
-  margin-top: 8px;
+/* Labele — ukryte ale zachowane dla a11y */
+.login-ui .login-dialog .labeled-field label {
+  display: block !important;
+  font-size: 11px !important; font-weight: 600 !important;
+  letter-spacing: 0.07em !important; text-transform: uppercase !important;
+  color: var(--muted) !important;
+  margin-bottom: 6px !important;
 }
-.login-dialog input[type="submit"]:hover,
-.login-dialog button[type="submit"]:hover {
-  background: #6d28d9;
-  box-shadow: 0 0 24px rgba(124,58,237,0.4);
-  transform: translateY(-1px);
+
+/* ── Inputy ────────────────────────────────────────── */
+.login-ui .login-dialog .labeled-field input,
+.login-ui .login-dialog .labeled-field.empty input,
+.login-ui .login-dialog input[type="text"],
+.login-ui .login-dialog input[type="password"],
+.login-ui .login-dialog input[type="email"] {
+  display: block !important;
+  width: 100% !important;
+  background: rgba(9,9,11,0.7) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  padding: 10px 14px !important;
+  outline: none !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+.login-ui .login-dialog .labeled-field input:focus,
+.login-ui .login-dialog .labeled-field.empty input:focus,
+.login-ui .login-dialog input[type="text"]:focus,
+.login-ui .login-dialog input[type="password"]:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+}
+
+.login-ui .login-dialog input::placeholder {
+  color: var(--placeholder) !important;
+  opacity: 1 !important;
+}
+
+/* Autofill — wymuś ciemne tło */
+.login-ui .login-dialog input:-webkit-autofill,
+.login-ui .login-dialog input:-webkit-autofill:hover,
+.login-ui .login-dialog input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #0d0d10 inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--text) !important;
+}
+
+/* ── Przycisk submit ───────────────────────────────── */
+.login-ui .login-dialog input[type="submit"],
+.login-ui .login-dialog button[type="submit"],
+.login-ui .login-dialog .login-fields input[type="submit"] {
+  display: block !important;
+  width: 100% !important;
+  background: var(--accent) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important; font-weight: 600 !important;
+  padding: 11px !important;
+  cursor: pointer !important;
+  letter-spacing: 0.03em !important;
+  margin-top: 8px !important;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s !important;
+}
+.login-ui .login-dialog input[type="submit"]:hover,
+.login-ui .login-dialog button[type="submit"]:hover {
+  background: var(--accent-hover) !important;
+  box-shadow: 0 0 24px rgba(124,58,237,0.4) !important;
+  transform: translateY(-1px) !important;
 }
 
 /* ── Linki ─────────────────────────────────────────── */
-a, a:visited { color: #a78bfa; text-decoration: none; }
-a:hover { color: #c4b5fd; text-decoration: underline; }
-
-/* ── Błędy ───────────────────────────────────────── */
-.login-dialog .error {
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 13px;
-  margin-bottom: 16px;
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.25);
-  color: #fca5a5;
+.login-ui a,
+.login-ui a:visited {
+  color: #a78bfa !important;
+  text-decoration: none !important;
+}
+.login-ui a:hover {
+  color: #c4b5fd !important;
+  text-decoration: underline !important;
 }
 
-/* ── Labele ─────────────────────────────────────── */
-.login-dialog label {
-  display: block;
-  font-size: 11px; font-weight: 600;
-  letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
+/* ── Błędy / komunikaty ────────────────────────────── */
+.login-ui .login-dialog .error,
+.login-ui .login-dialog .login-error,
+.login-ui .login-dialog .error-message,
+.login-ui .login-dialog [class*="error"] {
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  margin-bottom: 16px !important;
+  background: var(--error-bg) !important;
+  border: 1px solid var(--error-border) !important;
+  color: var(--error-text) !important;
 }
 
-/* ── Checkbox ─────────────────────────────────────── */
-input[type="checkbox"] { accent-color: var(--accent); }
+/* ── Domyślne logo Guacamole — ukryj ───────────────── */
+.login-ui .login-dialog .logo,
+.login-ui .login-dialog img.logo,
+.login-ui .logo {
+  display: none !important;
+}
+
+/* ── Checkbox ──────────────────────────────────────── */
+input[type="checkbox"] { accent-color: var(--accent) !important; }
 
 /* ── Scrollbar ──────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #52525b; }
+::-webkit-scrollbar { width: 6px !important; }
+::-webkit-scrollbar-track { background: var(--bg) !important; }
+::-webkit-scrollbar-thumb { background: #3f3f46 !important; border-radius: 3px !important; }
+::-webkit-scrollbar-thumb:hover { background: #52525b !important; }
