@@ -79,6 +79,24 @@ html, body {
   z-index: 20 !important; pointer-events: none !important; user-select: none !important;
 }
 
+/* ── Ukryj dekoracje podczas sesji zdalnej ─────────── */
+.client-display ~ #sakura-canvas,
+body:has(.client-display) #sakura-canvas,
+body:has(#guac-display) #sakura-canvas,
+body:has(.display canvas) #sakura-canvas { display: none !important; }
+
+body:has(.client-display) #fuji-bg,
+body:has(#guac-display) #fuji-bg,
+body:has(.display canvas) #fuji-bg { display: none !important; }
+
+body:has(.client-display) #sakura-branding,
+body:has(#guac-display) #sakura-branding,
+body:has(.display canvas) #sakura-branding { display: none !important; }
+
+body:has(.client-display) #side-label,
+body:has(#guac-display) #side-label,
+body:has(.display canvas) #side-label { display: none !important; }
+
 /* ══ GLOBALNY KOLOR TEKSTU ════════════════════════ */
 * { color: var(--text) !important; }
 
