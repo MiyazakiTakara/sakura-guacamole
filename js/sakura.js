@@ -8,10 +8,6 @@
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
-  function isInSession() {
-    return !!document.querySelector('.client-display, #guac-display, .display canvas');
-  }
-
   function spawnPetal(fromTop) {
     return {
       x: rand(0, window.innerWidth),
@@ -28,6 +24,9 @@
   }
 
   window.addEventListener('DOMContentLoaded', function () {
+    // Uruchom animacje tylko na ekranie logowania
+    if (!document.querySelector('div.login-ui')) return;
+
     var canvas = document.getElementById('sakura-canvas');
     if (!canvas) {
       canvas = document.createElement('canvas');
@@ -36,7 +35,6 @@
       document.body.appendChild(canvas);
     }
     var ctx = canvas.getContext('2d');
-    var active = true;
 
     var imgs = SPRITES.map(function (s) {
       var i = new Image();
@@ -48,23 +46,7 @@
     var petals = [];
     function init() { resize(); petals = Array.from({ length: PETAL_COUNT }, function () { return spawnPetal(false); }); }
 
-    function setDecoVisibility(visible) {
-      canvas.style.display = visible ? '' : 'none';
-      var fuji = document.getElementById('fuji-bg');
-      var branding = document.getElementById('sakura-branding');
-      var sideLabel = document.getElementById('side-label');
-      if (fuji) fuji.style.display = visible ? '' : 'none';
-      if (branding) branding.style.display = visible ? '' : 'none';
-      if (sideLabel) sideLabel.style.display = visible ? '' : 'none';
-    }
-
     function loop() {
-      if (isInSession()) {
-        setDecoVisibility(false);
-        requestAnimationFrame(loop);
-        return;
-      }
-      setDecoVisibility(true);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (var i = 0; i < petals.length; i++) {
         var p = petals[i];
