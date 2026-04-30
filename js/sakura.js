@@ -24,29 +24,39 @@
   }
 
   window.addEventListener('DOMContentLoaded', function () {
-    // Uruchom animacje tylko na ekranie logowania
-    if (!document.querySelector('div.login-ui')) return;
-
-    var canvas = document.getElementById('sakura-canvas');
-    if (!canvas) {
-      canvas = document.createElement('canvas');
-      canvas.id = 'sakura-canvas';
-      canvas.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(canvas);
-    }
-    var ctx = canvas.getContext('2d');
-
-    var imgs = SPRITES.map(function (s) {
-      var i = new Image();
-      i.src = BASE + '/img/sakura/' + s;
-      return i;
-    });
-
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    var running = false;
+    var rafId = null;
+    var canvas = null;
+    var ctx = null;
     var petals = [];
-    function init() { resize(); petals = Array.from({ length: PETAL_COUNT }, function () { return spawnPetal(false); }); }
+    var imgs = [];
+
+    function hideCanvas() {
+      if (canvas) canvas.style.display = 'none';
+      var fuji     = document.getElementById('fuji-bg');
+      var branding = document.getElementById('sakura-branding');
+      var side     = document.getElementById('side-label');
+      if (fuji)     fuji.style.display     = 'none';
+      if (branding) branding.style.display = 'none';
+      if (side)     side.style.display     = 'none';
+    }
+
+    function showCanvas() {
+      if (canvas) canvas.style.display = '';
+      var fuji     = document.getElementById('fuji-bg');
+      var branding = document.getElementById('sakura-branding');
+      var side     = document.getElementById('side-label');
+      if (fuji)     fuji.style.display     = '';
+      if (branding) branding.style.display = '';
+      if (side)     side.style.display     = '';
+    }
+
+    function resize() {
+      if (canvas) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    }
 
     function loop() {
+      if (!running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (var i = 0; i < petals.length; i++) {
         var p = petals[i];
@@ -66,15 +76,55 @@
         ctx.restore();
         if (p.y > canvas.height + dH) Object.assign(p, spawnPetal(true));
       }
-      requestAnimationFrame(loop);
+      rafId = requestAnimationFrame(loop);
     }
 
-    Promise.all(imgs.map(function (img) {
-      return new Promise(function (res) {
-        if (img.complete) res();
-        else img.onload = function () { res(); };
-      });
-    })).then(function () { init(); loop(); });
+    function startAnimation() {
+      if (running) return;
+      running = true;
+
+      if (!canvas) {
+        canvas = document.getElementById('sakura-canvas');
+        if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.id = 'sakura-canvas';
+          canvas.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(canvas);
+        }
+        ctx = canvas.getContext('2d');
+        imgs = SPRITES.map(function (s) {
+          var i = new Image(); i.src = BASE + '/img/sakura/' + s; return i;
+        });
+      }
+
+      resize();
+      petals = Array.from({ length: PETAL_COUNT }, function () { return spawnPetal(false); });
+      showCanvas();
+
+      Promise.all(imgs.map(function (img) {
+        return new Promise(function (res) {
+          if (img.complete) res(); else img.onload = res;
+        });
+      })).then(function () { loop(); });
+    }
+
+    function stopAnimation() {
+      running = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      hideCanvas();
+    }
+
+    // MutationObserver sledzi zmiany w DOM
+    var observer = new MutationObserver(function () {
+      var onLogin = !!document.querySelector('div.login-ui');
+      if (onLogin && !running) startAnimation();
+      if (!onLogin && running) stopAnimation();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Sprawdz stan poczatkowy
+    if (document.querySelector('div.login-ui')) startAnimation();
 
     window.addEventListener('resize', resize);
   });
